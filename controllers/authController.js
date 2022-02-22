@@ -52,12 +52,11 @@ exports.CreateUser = async (req, res) => {
       email: Helpers.lowerCase(value.email),
       password: hash,
     };
-    console.log(body);
 
     User.create(body)
       .then((user) => {
         const token = jwt.sign({ data: user }, dbConfig.secret, {
-          expiresIn: "5h",
+          expiresIn: "1h",
         });
         res.cookie("auth", token);
         res
@@ -96,7 +95,7 @@ exports.LoginUser = async (req, res) => {
             .json({ message: "Password is incorrect" });
         }
         const token = jwt.sign({ data: user }, dbConfig.secret, {
-          expiresIn: "5h",
+          expiresIn: "1h",
         });
         res.cookie("auth", token);
         return res
